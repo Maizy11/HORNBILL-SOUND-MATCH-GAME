@@ -84,6 +84,8 @@ button {
 #result {
     font-size: 20px;
     margin-top: 15px;
+    font-weight: bold;
+    color: #2a4d1d;
 }
 
 @media screen and (max-width: 600px) {
@@ -92,7 +94,8 @@ button {
     }
 
         .hornbill-btn img {
-            width: 90%;
+            width: 75%;
+            max-width: 120px;
         }
 
     button {
