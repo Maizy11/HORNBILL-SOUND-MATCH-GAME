@@ -1,0 +1,106 @@
+body {
+    position: relative;
+    background: url("HORNBILL-background.png") no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    color: #2e4d1d;
+    margin: 0;
+    padding: 0;
+}
+
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255,255,255,0.6);
+        z-index: -1;
+    }
+
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100px;
+    height: auto;
+    z-index: 999;
+}
+
+.container {
+    padding: 20px;
+}
+
+h1 {
+    color: #3a6b2d;
+}
+
+.buttons {
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 15px;
+    margin: 10px;
+    font-size: 16px;
+    background-color: #a8d5a2;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #1b3b1b;
+}
+
+    button:hover {
+        background-color: #8fcf8b;
+    }
+
+.choices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hornbill-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 180px;
+    margin: 10px;
+    padding: 10px;
+    background-color: #d4f5cb;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+}
+
+    .hornbill-btn img {
+        width: 150px;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 5px;
+    }
+
+#result {
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+@media screen and (max-width: 600px) {
+    .hornbill-btn {
+        width: 100%;
+    }
+
+        .hornbill-btn img {
+            width: 90%;
+        }
+
+    button {
+        width: 90%;
+        font-size: 18px;
+    }
+
+    .logo {
+        width: 60px;
+    }
+}

@@ -2,103 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Borneo Hornbill Sound Match</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 40px;
-            background: #f2f7fa;
-        }
-
-        h1 {
-            color: #2e4f63;
-        }
-
-        button.play {
-            padding: 12px 25px;
-            font-size: 16px;
-            margin: 10px;
-            background: #4da6ff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-            button.play:hover {
-                background: #3399ff;
-            }
-
-        button.choice {
-            padding: 10px 20px;
-            margin: 5px;
-            font-size: 14px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            background: #75baff;
-            color: white;
-            transition: 0.3s;
-        }
-
-            button.choice:hover {
-                background: #5599dd;
-            }
-
-        #result {
-            font-size: 18px;
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>🔊 Borneo Hornbill Sound Match</h1>
-    <p>Listen to the call. Which hornbill is it?</p>
-    <button class="play" onclick="playSound()">🔊 Play Call</button>
-    <div id="buttons">
-        <button class="choice" onclick="checkAnswer('Rhinoceros Hornbill')">Rhinoceros Hornbill</button>
-        <button class="choice" onclick="checkAnswer('Helmeted Hornbill')">Helmeted Hornbill</button>
-        <button class="choice" onclick="checkAnswer('Wrinkled Hornbill')">Wrinkled Hornbill</button>
-        <button class="choice" onclick="checkAnswer('White‑crowned Hornbill')">White‑crowned Hornbill</button>
-        <button class="choice" onclick="checkAnswer('Oriental Pied Hornbill')">Oriental Pied Hornbill</button>
-        <button class="choice" onclick="checkAnswer('Bushy‑crested Hornbill')">Bushy‑crested Hornbill</button>
-        <button class="choice" onclick="checkAnswer('Wreathed Hornbill')">Wreathed Hornbill</button>
-        <button class="choice" onclick="checkAnswer('Asian Black Hornbill')">Asian Black Hornbill</button>
+    <img src="YEI-logo.png" alt="YEI Logo" class="logo" />
+    <div class="container">
+        <h1>Borneo Hornbill Sound Match</h1>
+        <p>🦜🌳 Listen to the call. Which hornbill is it?</p>
+
+        <div class="buttons">
+            <button id="playBtn">🔊 Play Call</button>
+            <button id="stopBtn">⏹ Stop</button>
+        </div>
+
+        <div class="choices" id="choices"></div>
+
+        <div id="result"></div>
     </div>
-    <p id="result"></p>
 
-    <script>
-    const sounds = [
-      { name: "Rhinoceros Hornbill", file: "rhinoceros.mp3" },
-      { name: "Helmeted Hornbill", file: "helmeted.mp3" },
-      { name: "Wrinkled Hornbill", file: "wrinkled.mp3" },
-      { name: "White‑crowned Hornbill", file: "whitecrowned.mp3" },
-      { name: "Oriental Pied Hornbill", file: "orientalpied.mp3" },
-      { name: "Bushy‑crested Hornbill", file: "bushycrested.mp3" },
-      { name: "Wreathed Hornbill", file: "wreathed.mp3" },
-      { name: "Asian Black Hornbill", file: "asianblack.mp3" }
-    ];
-    let current = null;
-
-    function playSound() {
-      const idx = Math.floor(Math.random() * sounds.length);
-      current = sounds[idx].name;
-      const audio = new Audio(sounds[idx].file);
-      audio.play();
-      document.getElementById("result").textContent = "";
-    }
-
-    function checkAnswer(choice) {
-      const res = document.getElementById("result");
-      if (choice === current) {
-        res.textContent = `✅ Correct! It was ${current}.`;
-        res.style.color = "green";
-      } else {
-        res.textContent = `❌ Try again—you selected ${choice}.`;
-        res.style.color = "red";
-      }
-    }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
+
