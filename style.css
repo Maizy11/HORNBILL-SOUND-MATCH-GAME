@@ -41,6 +41,13 @@ h1 {
     margin: 20px 0;
 }
 
+#result {
+    font-size: 20px;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #2a4d1d;
+}
+
 button {
     padding: 10px 15px;
     margin: 10px;
@@ -81,20 +88,13 @@ button {
         margin-bottom: 5px;
     }
 
-#result {
-    font-size: 20px;
-    margin-top: 15px;
-    font-weight: bold;
-    color: #2a4d1d;
-}
-
 @media screen and (max-width: 600px) {
     .hornbill-btn {
         width: 100%;
     }
 
         .hornbill-btn img {
-            width: 75%;
+            width: 85%;
             max-width: 120px;
         }
 
