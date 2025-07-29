@@ -91,18 +91,26 @@ button {
 @media screen and (max-width: 600px) {
     .hornbill-btn {
         width: 100%;
+        margin: 8px auto;
+        padding: 8px;
     }
 
         .hornbill-btn img {
-            width: 90%;
+            width: 100%;
+            height: auto;
         }
 
     button {
         width: 90%;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .logo {
         width: 50px;
+    }
+
+    #result {
+        font-size: 18px;
+        margin-bottom: 15px;
     }
 }
