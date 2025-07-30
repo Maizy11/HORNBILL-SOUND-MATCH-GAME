@@ -23,24 +23,26 @@ function shuffle(array) {
 }
 
 function loadQuestion() {
-    const correctHornbill = hornbills[Math.floor(Math.random() * hornbills.length)];
-    currentHornbill = correctHornbill;
-    audio.src = `${correctHornbill.file}.mp3`;
+    // Pick 1 correct hornbill randomly
+    currentHornbill = hornbills[Math.floor(Math.random() * hornbills.length)];
+    audio.src = `${currentHornbill.file}.mp3`;
     resultDiv.textContent = "";
 
-    // Create 3 random wrong choices + 1 correct
-    const wrongChoices = hornbills.filter(h => h.name !== correctHornbill.name);
-    shuffle(wrongChoices);
-    const options = [...wrongChoices.slice(0, 3), correctHornbill];
-    shuffle(options); // Now mix correct + wrong options
+    // Get 3 wrong hornbills
+    const wrongOptions = hornbills.filter(hb => hb.name !== currentHornbill.name);
+    const randomWrong = shuffle(wrongOptions).slice(0, 3);
 
+    // Combine and shuffle again for final choices
+    const allChoices = shuffle([currentHornbill, ...randomWrong]);
+
+    // Display choices
     choicesDiv.innerHTML = "";
-    options.forEach(hb => {
+    allChoices.forEach(hb => {
         const btn = document.createElement("button");
         btn.className = "hornbill-btn";
         btn.innerHTML = `
-            <img src="${hb.image}" alt="${hb.name}" />
-            <span>${hb.name}</span>
+          <img src="${hb.image}" alt="${hb.name}" />
+          <span>${hb.name}</span>
         `;
         btn.onclick = () => checkAnswer(hb.name);
         choicesDiv.appendChild(btn);
