@@ -1,192 +1,118 @@
+/* === style.css === */
 body {
-    position: relative;
-    background: url("HORNBILL-background.png") no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-    color: #2e4d1d;
-    margin: 0;
-    padding: 0;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255,255,255,0.6);
-    z-index: -1;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f8ff;
+  text-align: center;
 }
 
 .logo {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 80px;
-    height: auto;
-    z-index: 1000;
+  width: 120px;
+  margin-top: 20px;
 }
 
 .container {
-    padding: 80px 20px 20px 20px; /* pushed down to avoid logo overlap */
-    max-width: 900px;
-    margin: auto;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 h1 {
-    color: #3a6b2d;
-    font-size: 28px;
-    margin-bottom: 0;
+  font-size: 2rem;
+  color: #2a4d14;
+  margin-bottom: 10px;
 }
 
 .subtitle {
-    margin-top: 5px;
-    font-size: 18px;
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 .instructions {
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 10px;
-    padding: 15px;
-    margin: 20px auto;
-    max-width: 700px;
-    font-size: 16px;
+  background-color: #e0f0d6;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
 }
 
 .buttons {
-    margin: 20px 0;
-}
-
-#result {
-    font-size: 20px;
-    margin-top: 15px;
-    font-weight: bold;
-    color: #2a4d1d;
-    min-height: 24px;
-    transition: opacity 0.3s ease-in-out;
+  margin-bottom: 15px;
 }
 
 button {
-    padding: 10px 15px;
-    margin: 10px;
-    font-size: 16px;
-    background-color: #a8d5a2;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #1b3b1b;
-    transition: background-color 0.2s, transform 0.2s;
+  font-size: 1rem;
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #8fcf8b;
-    transform: scale(1.05);
+  background-color: #388e3c;
+}
+
+.scoreboard {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+#result {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #1a237e;
+  margin-bottom: 20px;
 }
 
 .choices {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    justify-items: center;
-    margin-top: 20px;
-    padding: 0 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  justify-items: center;
+  padding: 10px;
 }
 
-.hornbill-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #d4f5cb;
-    border-radius: 14px;
-    padding: 10px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 100%;
-    max-width: 180px;
-    height: auto;
-    text-align: center;
+.choices img {
+  width: 100%;
+  max-width: 120px;
+  border: 3px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
 }
 
-.hornbill-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.15);
+.choices img:hover {
+  transform: scale(1.05);
+  border-color: #4caf50;
 }
 
-.hornbill-btn img {
-    width: 100%;
-    max-height: 140px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 8px;
+.fun-fact {
+  margin-top: 10px;
+  font-style: italic;
+  color: #555;
 }
 
-.hornbill-btn span {
-    font-size: 14px;
-    color: #2e4d1d;
-    word-wrap: break-word;
-    line-height: 1.2;
-}
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
+  }
 
-/* ===== MOBILE: max 768px ===== */
-@media screen and (max-width: 768px) {
-    .choices {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
+  .subtitle,
+  .scoreboard {
+    font-size: 1rem;
+  }
 
-    .hornbill-btn {
-        max-width: 140px;
-        padding: 10px;
-    }
+  .buttons button {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
 
-    .hornbill-btn img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
-
-    .hornbill-btn span {
-        font-size: 12px;
-    }
-
-    .container {
-        padding-top: 100px;
-    }
-}
-
-/* ===== VERY SMALL: max 480px ===== */
-@media screen and (max-width: 480px) {
-    .hornbill-btn {
-        max-width: 120px;
-    }
-
-    .hornbill-btn span {
-        font-size: 10px;
-    }
-}
-
-/* ===== DESKTOP: min 1024px ===== */
-@media (min-width: 1024px) {
-    .choices {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
-    }
-
-    .hornbill-btn {
-        max-width: 200px;
-        padding: 14px;
-    }
-
-    .hornbill-btn img {
-        width: 180px;
-        height: auto;
-        border-radius: 12px;
-    }
-
-    .hornbill-btn span {
-        font-size: 16px;
-        margin-top: 8px;
-    }
+  .choices {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
