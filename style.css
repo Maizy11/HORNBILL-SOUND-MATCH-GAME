@@ -1,287 +1,148 @@
-bolet score = 0;
-let attempts = 0;
-
-const bgMusic = document.getElementById("bg-music");
-bgMusic.volume = 0.2;
-
-const audio = new Audio();
-const choicesDiv = document.getElementById("choices");
-const resultDiv = document.getElementById("result");
-const progressText = document.getElementById("progress");
-
-const hornbills = [
-  { name: "Rhinoceros Hornbill", file: "rhinoceros", image: "rhinoceros.jpg" },
-  { name: "Helmeted Hornbill", file: "helmeted", image: "helmeted.jpg" },
-  { name: "Wrinkled Hornbill", file: "wrinkled", image: "wrinkled.jpg" },
-  { name: "White-crowned Hornbill", file: "whitecrowned", image: "whitecrowned.jpg" },
-  { name: "Oriental Pied Hornbill", file: "orientalpied", image: "orientalpied.jpg" },
-  { name: "Bushy-crested Hornbill", file: "bushycrested", image: "bushycrested.jpg" },
-  { name: "Wreathed Hornbill", file: "wreathed", image: "wreathed.jpg" },
-  { name: "Black Hornbill", file: "black", image: "black.jpg" }
-];
-
-let currentHornbill = null;
-
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-function updateProgress() {
-  progressText.textContent = `Score: ${score} | Attempts: ${attempts}`;
-}
-
-function loadQuestion() {
-  currentHornbill = hornbills[Math.floor(Math.random() * hornbills.length)];
-  audio.src = `${currentHornbill.file}.mp3`;
-  resultDiv.textContent = "";
-
-  const shuffled = shuffle([...hornbills]);
-  choicesDiv.innerHTML = "";
-  shuffled.forEach(hb => {
-    const btn = document.createElement("button");
-    btn.className = "hornbill-btn";
-    btn.innerHTML = `<img src="${hb.image}" alt="${hb.name}" /><span>${hb.name}</span>`;
-    btn.onclick = () => checkAnswer(hb.name);
-    choicesDiv.appendChild(btn);
-  });
-}
-
-
-function checkAnswer(selected) {
-  const correctSound = document.getElementById("correct-sound");
-  const wrongSound = document.getElementById("wrong-sound");
-
-  if (selected === currentHornbill.name) {
-    resultDiv.textContent = "✅ Correct!";
-    resultDiv.style.color = "green";
-    correctSound.play();
-    score++;
-  } else {
-    resultDiv.textContent = `❌ Oops! It was ${currentHornbill.name}.`;
-    resultDiv.style.color = "red";
-    wrongSound.play();
-  }
-
-  attempts++;
-  updateProgress();
-
-  setTimeout(loadQuestion, 2000);
-}
-
-// Event listeners
-document.getElementById("playBtn").addEventListener("click", () => {
-  audio.play();
-  if (bgMusic.paused) {
-    bgMusic.play();
-  }
-});
-
-document.getElementById("stopBtn").addEventListener("click", () => {
-  audio.pause();
-  audio.currentTime = 0;
-});
-
-document.getElementById("musicToggle").addEventListener("click", () => {
-  if (bgMusic.paused) {
-    bgMusic.play();
-    document.getElementById("musicToggle").textContent = "🔇 Mute Music";
-  } else {
-    bgMusic.pause();
-    document.getElementById("musicToggle").textContent = "🎵 Unmute Music";
-  }
-});
-
-window.addEventListener("DOMContentLoaded", () => {
-  loadQuestion();
-});dy {
-    position: relative;
-    background: url("HORNBILL-background.png") no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-    color: #2e4d1d;
-    margin: 0;
-    padding: 0;
+body {
+  position: relative;
+  background: url("HORNBILL-background.png") no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  color: #2e4d1d;
+  margin: 0;
+  padding: 0;
 }
 
 body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255,255,255,0.6);
-    z-index: -1;
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.6);
+  z-index: -1;
 }
 
 .logo {
-    position: absolute;
+    position: fixed;
     top: 10px;
     left: 10px;
-    width: 80px;
+    width: 100px;
     height: auto;
-    z-index: 1000;
+    z-index: 999;
 }
 
 .container {
-    padding: 80px 20px 20px 20px; /* pushed down to avoid logo overlap */
-    max-width: 900px;
-    margin: auto;
+  padding: 20px;
+  margin-top: 100px;
 }
 
-h1 {
-    color: #3a6b2d;
-    font-size: 28px;
-    margin-bottom: 0;
-}
-
-.subtitle {
-    margin-top: 5px;
-    font-size: 18px;
+h1.main-title {
+  color: #3a6b2d;
 }
 
 .instructions {
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 10px;
-    padding: 15px;
-    margin: 20px auto;
-    max-width: 700px;
-    font-size: 16px;
+  margin-top: 10px;
 }
 
-.buttons {
-    margin: 20px 0;
+.controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-#result {
-    font-size: 20px;
-    margin-top: 15px;
-    font-weight: bold;
-    color: #2a4d1d;
-    min-height: 24px;
-    transition: opacity 0.3s ease-in-out;
+.controls button {
+  padding: 10px 16px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-button {
-    padding: 10px 15px;
-    margin: 10px;
-    font-size: 16px;
-    background-color: #a8d5a2;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #1b3b1b;
-    transition: background-color 0.2s, transform 0.2s;
+.controls button:hover {
+  background-color: #388e3c;
 }
 
-button:hover {
-    background-color: #8fcf8b;
-    transform: scale(1.05);
+#progress {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .choices {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    justify-items: center;
-    margin-top: 20px;
-    padding: 0 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  justify-content: center;
+  padding: 0 20px;
 }
 
 .hornbill-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #d4f5cb;
-    border-radius: 14px;
-    padding: 10px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 100%;
-    max-width: 180px;
-    height: auto;
-    text-align: center;
-}
-
-.hornbill-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #d4f5cb;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
 }
 
 .hornbill-btn img {
-    width: 100%;
-    max-height: 140px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 8px;
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 5px;
 }
 
-.hornbill-btn span {
-    font-size: 14px;
-    color: #2e4d1d;
-    word-wrap: break-word;
-    line-height: 1.2;
+#result {
+  font-size: 20px;
+  margin-top: 15px;
 }
 
-/* ===== MOBILE: max 768px ===== */
+@media screen and (max-width: 600px) {
+  .main-title {
+    margin-top: 60px;
+  }
+
+  .choices {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hornbill-btn img {
+    width: 90%;
+  }
+
+  .controls button {
+    width: 90%;
+    font-size: 18px;
+  }
+
+  .logo {
+    width: 60px;
+  }
+}
+
+.title-container {
+    padding-top: 120px; /* Gives space below fixed logo */
+    text-align: center;
+}
+
 @media screen and (max-width: 768px) {
-    .choices {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-
-    .hornbill-btn {
-        max-width: 140px;
-        padding: 10px;
-    }
-
-    .hornbill-btn img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
-
-    .hornbill-btn span {
-        font-size: 12px;
-    }
-
-    .container {
+    .title-container {
         padding-top: 100px;
     }
-}
 
-/* ===== VERY SMALL: max 480px ===== */
-@media screen and (max-width: 480px) {
-    .hornbill-btn {
-        max-width: 120px;
+    .logo {
+        width: 70px;
     }
 
-    .hornbill-btn span {
-        font-size: 10px;
-    }
-}
-
-/* ===== DESKTOP: min 1024px ===== */
-@media (min-width: 1024px) {
-    .choices {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
-    }
-
-    .hornbill-btn {
-        max-width: 200px;
-        padding: 14px;
-    }
-
-    .hornbill-btn img {
-        width: 180px;
-        height: auto;
-        border-radius: 12px;
-    }
-
-    .hornbill-btn span {
-        font-size: 16px;
-        margin-top: 8px;
+    h1 {
+        font-size: 20px;
+        margin-top: 10px;
     }
 }
