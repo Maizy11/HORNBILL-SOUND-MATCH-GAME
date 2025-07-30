@@ -161,3 +161,39 @@ button:hover {
         font-size: 24px;
     }
 }
+
+@media (min-width: 768px) {
+  .choices {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
+    margin: 20px auto;
+    max-width: 900px;
+  }
+
+  .hornbill-btn {
+    background-color: #d2f5c0;
+    border: none;
+    padding: 10px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 180px;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .hornbill-btn img {
+    width: 160px;
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .hornbill-btn span {
+    font-size: 14px;
+    color: #2e4d1d;
+    text-align: center;
+    margin-top: 8px;
+  }
+}
