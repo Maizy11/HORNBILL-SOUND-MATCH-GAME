@@ -1,124 +1,67 @@
-const images = [
-  'hornbill1.jpg',
-  'hornbill2.jpg',
-  'hornbill3.jpg',
-  'hornbill4.jpg',
-  'hornbill5.jpg',
-  'hornbill6.jpg',
-  'hornbill7.jpg',
-  'hornbill8.jpg'
+const hornbills = [
+    { name: "Rhinoceros Hornbill", file: "rhinoceros", image: "rhinoceros.jpg" },
+    { name: "Helmeted Hornbill", file: "helmeted", image: "helmeted.jpg" },
+    { name: "Wrinkled Hornbill", file: "wrinkled", image: "wrinkled.jpg" },
+    { name: "White-crowned Hornbill", file: "whitecrowned", image: "whitecrowned.jpg" },
+    { name: "Oriental Pied Hornbill", file: "orientalpied", image: "orientalpied.jpg" },
+    { name: "Bushy-crested Hornbill", file: "bushycrested", image: "bushycrested.jpg" },
+    { name: "Wreathed Hornbill", file: "wreathed", image: "wreathed.jpg" },
+    { name: "Black Hornbill", file: "black", image: "black.jpg" }
 ];
 
-const sounds = [
-  'audio1.mp3',
-  'audio2.mp3',
-  'audio3.mp3',
-  'audio4.mp3',
-  'audio5.mp3',
-  'audio6.mp3',
-  'audio7.mp3',
-  'audio8.mp3'
-];
+let currentHornbill = null;
+const audio = new Audio();
+const choicesDiv = document.getElementById("choices");
+const resultDiv = document.getElementById("result");
 
-const funFacts = [
-  'Hornbills are monogamous and stay with one partner for life!',
-  'Some hornbill species seal themselves in tree holes during nesting.',
-  'Hornbills can’t drink water — they get it from food!',
-  'The rhinoceros hornbill is the national bird of Malaysia!',
-  'Hornbills are known for their loud, echoing calls.',
-  'Some hornbills can live more than 35 years in the wild!',
-  'Hornbills play a key role in seed dispersal in rainforests.',
-  'Hornbill beaks look heavy but are actually light and hollow!'
-];
-
-const choicesDiv = document.getElementById('choices');
-const resultDiv = document.getElementById('result');
-const scoreSpan = document.getElementById('score');
-const attemptsSpan = document.getElementById('attempts');
-const backgroundMusic = document.getElementById('backgroundMusic');
-const correctSound = document.getElementById('correctSound');
-const wrongSound = document.getElementById('wrongSound');
-
-let correctIndex = 0;
-let score = 0;
-let attempts = 0;
-
-// Generate choices
-function loadChoices() {
-  choicesDiv.innerHTML = '';
-  images.forEach((imgSrc, index) => {
-    const img = document.createElement('img');
-    img.src = imgSrc;
-    img.alt = `Hornbill ${index + 1}`;
-    img.addEventListener('click', () => handleChoice(index));
-    choicesDiv.appendChild(img);
-  });
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
-// Play sound
-document.getElementById('playBtn').addEventListener('click', () => {
-  const audio = new Audio(sounds[correctIndex]);
-  audio.play();
+function loadQuestion() {
+    currentHornbill = hornbills[Math.floor(Math.random() * hornbills.length)];
+    audio.src = ${currentHornbill.file}.mp3;
+    resultDiv.textContent = "";
+
+    const wrongOptions = hornbills.filter(hb => hb.name !== currentHornbill.name);
+    const randomWrong = shuffle(wrongOptions).slice(0, 7);
+    const allChoices = shuffle([currentHornbill, ...randomWrong]);
+
+    choicesDiv.innerHTML = "";
+    allChoices.forEach(hb => {
+        const btn = document.createElement("button");
+        btn.className = "hornbill-btn";
+        btn.innerHTML = `
+            <img src="${hb.image}" alt="${hb.name}" />
+            <span>${hb.name}</span>
+        `;
+        btn.onclick = () => checkAnswer(hb.name);
+        choicesDiv.appendChild(btn);
+    });
+}
+
+function checkAnswer(selected) {
+    if (selected === currentHornbill.name) {
+        resultDiv.textContent = "✅ Correct!";
+        resultDiv.style.color = "green";
+    } else {
+        resultDiv.textContent = ❌ Oops! It was ${currentHornbill.name}.;
+        resultDiv.style.color = "red";
+    }
+    setTimeout(loadQuestion, 2000);
+}
+
+document.getElementById("playBtn").addEventListener("click", () => {
+    audio.play();
 });
 
-document.getElementById('stopBtn').addEventListener('click', () => {
-  backgroundMusic.pause();
-  backgroundMusic.currentTime = 0;
+document.getElementById("stopBtn").addEventListener("click", () => {
+    audio.pause();
+    audio.currentTime = 0;
 });
 
-document.getElementById('muteBtn').addEventListener('click', () => {
-  backgroundMusic.muted = !backgroundMusic.muted;
-});
-
-// Handle answer
-function handleChoice(selectedIndex) {
-  attempts++;
-  attemptsSpan.textContent = `Attempts: ${attempts}`;
-
-  if (selectedIndex === correctIndex) {
-    resultDiv.textContent = '✅ Correct!';
-    score++;
-    scoreSpan.textContent = `Score: ${score}`;
-    correctSound.play();
-
-    confetti();
-
-    document.getElementById('funFact').textContent = `💡 Fun Fact: ${funFacts[correctIndex]}`;
-
-    updateProgress();
-    nextQuestion();
-  } else {
-    resultDiv.textContent = '❌ Try Again!';
-    wrongSound.play();
-  }
-}
-
-function nextQuestion() {
-  setTimeout(() => {
-    resultDiv.textContent = '';
-    document.getElementById('funFact').textContent = '';
-    correctIndex = Math.floor(Math.random() * images.length);
-  }, 1500);
-}
-
-function updateProgress() {
-  const percent = (score / images.length) * 100;
-  document.getElementById('progressBarFill').style.width = `${percent}%`;
-}
-
-function initGame() {
-  loadChoices();
-  correctIndex = Math.floor(Math.random() * images.length);
-  document.getElementById('funFact')?.remove();
-
-  const factP = document.createElement('p');
-  factP.id = 'funFact';
-  document.querySelector('.container').appendChild(factP);
-
-  const progressBar = document.createElement('div');
-  progressBar.id = 'progressBar';
-  progressBar.innerHTML = '<div id="progressBarFill"></div>';
-  document.querySelector('.container').appendChild(progressBar);
-}
-
-initGame();
+loadQuestion();
