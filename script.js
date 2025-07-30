@@ -1,105 +1,120 @@
-const hornbillSounds = [
-  { name: "Rhinoceros Hornbill", file: "audio/rhino.mp3", image: "images/rhino.jpg", fact: "Rhinoceros Hornbills are known for their large casque and loud calls echoing through rainforests." },
-  { name: "Helmeted Hornbill", file: "audio/helmeted.mp3", image: "images/helmeted.jpg", fact: "Helmeted Hornbills are critically endangered due to hunting for their solid casque, known as hornbill ivory." },
-  { name: "Oriental Pied Hornbill", file: "audio/oriental.mp3", image: "images/oriental.jpg", fact: "The Oriental Pied Hornbill can often be seen in urban parks and secondary forests." },
-  { name: "Black Hornbill", file: "audio/black.mp3", image: "images/black.jpg", fact: "Black Hornbills feed mostly on fruits, especially figs, and are important seed dispersers." },
-  { name: "Wreathed Hornbill", file: "audio/wreathed.mp3", image: "images/wreathed.jpg", fact: "Wreathed Hornbills are highly social and fly in flocks in search of food." },
-  { name: "Bushy-crested Hornbill", file: "audio/bushy.mp3", image: "images/bushy.jpg", fact: "Bushy-crested Hornbills are cooperative breeders and often move in family groups." },
-  { name: "White-crowned Hornbill", file: "audio/whitecrowned.mp3", image: "images/whitecrowned.jpg", fact: "White-crowned Hornbills have distinctive white crests and are shy forest dwellers." },
-  { name: "Wrinkled Hornbill", file: "audio/wrinkled.mp3", image: "images/wrinkled.jpg", fact: "Wrinkled Hornbills are named for the folds on their casque and are rarely seen due to their elusive nature." },
+const hornbills = [
+  {
+    name: "Rhinoceros Hornbill",
+    img: "images/rhinoceros.jpg",
+    sound: "audio/rhinoceros.mp3",
+    fact: "It's the national bird of Malaysia!"
+  },
+  {
+    name: "Helmeted Hornbill",
+    img: "images/helmeted.jpg",
+    sound: "audio/helmeted.mp3",
+    fact: "Its casque is solid and used in carvings."
+  },
+  {
+    name: "Wrinkled Hornbill",
+    img: "images/wrinkled.jpg",
+    sound: "audio/wrinkled.mp3",
+    fact: "Females nest inside sealed tree holes."
+  },
+  {
+    name: "Bushy-crested Hornbill",
+    img: "images/bushy.jpg",
+    sound: "audio/bushy.mp3",
+    fact: "It lives in social groups!"
+  },
+  {
+    name: "Black Hornbill",
+    img: "images/black.jpg",
+    sound: "audio/black.mp3",
+    fact: "Commonly found in lowland forests."
+  },
+  {
+    name: "Oriental Pied Hornbill",
+    img: "images/oriental.jpg",
+    sound: "audio/oriental.mp3",
+    fact: "Adapts well to urban areas!"
+  },
+  {
+    name: "White-crowned Hornbill",
+    img: "images/whitecrowned.jpg",
+    sound: "audio/whitecrowned.mp3",
+    fact: "Rare and striking in appearance."
+  },
+  {
+    name: "Wreathed Hornbill",
+    img: "images/wreathed.jpg",
+    sound: "audio/wreathed.mp3",
+    fact: "Named after its neck wrinkle."
+  }
 ];
 
-let currentAnswer = null;
+let correctHornbill;
+let currentAudio = new Audio();
 let score = 0;
 let attempts = 0;
-let currentAudio = null;
+
+const playBtn = document.getElementById("playBtn");
+const stopBtn = document.getElementById("stopBtn");
+const muteBtn = document.getElementById("muteBtn");
+const result = document.getElementById("result");
 const choicesContainer = document.getElementById("choices");
-const resultDiv = document.getElementById("result");
 const scoreDisplay = document.getElementById("score");
 const attemptsDisplay = document.getElementById("attempts");
 const bgMusic = document.getElementById("backgroundMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
-let isMuted = false;
 
-// FUN FACT BOX
-const funFactBox = document.createElement("div");
-funFactBox.id = "funFact";
-funFactBox.style.marginTop = "20px";
-funFactBox.style.fontStyle = "italic";
-funFactBox.style.color = "#333";
-document.querySelector(".container").appendChild(funFactBox);
-
-// Create hornbill choices
-function createChoices() {
+// Display all images
+function displayChoices() {
   choicesContainer.innerHTML = "";
-  hornbillSounds.forEach((hornbill, index) => {
+  hornbills.forEach((hornbill) => {
     const img = document.createElement("img");
-    img.src = hornbill.image;
+    img.src = hornbill.img;
     img.alt = hornbill.name;
-    img.classList.add("hornbill-img");
-    img.addEventListener("click", () => checkAnswer(index));
+    img.classList.add("choice-img");
+    img.addEventListener("click", () => handleChoice(hornbill));
     choicesContainer.appendChild(img);
   });
 }
 
-// Play hornbill sound
-function playSound() {
-  const randomIndex = Math.floor(Math.random() * hornbillSounds.length);
-  const selected = hornbillSounds[randomIndex];
-  currentAnswer = randomIndex;
-
-  if (currentAudio) currentAudio.pause();
-  currentAudio = new Audio(selected.file);
-  currentAudio.play();
-
-  resultDiv.textContent = "";
-  funFactBox.textContent = "";
-}
-
-// Stop audio
-function stopSound() {
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio = null;
-  }
-}
-
-// Check user answer
-function checkAnswer(index) {
+// Handle user choice
+function handleChoice(selectedHornbill) {
   attempts++;
-  attemptsDisplay.textContent = `Attempts: ${attempts}`;
-
-  if (index === currentAnswer) {
+  if (selectedHornbill.name === correctHornbill.name) {
     score++;
-    scoreDisplay.textContent = `Score: ${score}`;
-    resultDiv.textContent = "✅ Correct!";
+    result.innerHTML = `✅ Correct! <strong>${selectedHornbill.name}</strong><br><em>${selectedHornbill.fact}</em>`;
     correctSound.play();
-
-    // Show fun fact
-    funFactBox.textContent = "🧠 Fun Fact: " + hornbillSounds[index].fact;
-
-    // Confetti
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
+    confetti();
   } else {
-    resultDiv.textContent = "❌ Try Again!";
+    result.innerHTML = `❌ Wrong! That was <strong>${selectedHornbill.name}</strong>.`;
     wrongSound.play();
-    funFactBox.textContent = "";
   }
+  updateScoreboard();
+  setTimeout(playRandomCall, 2000); // next question
 }
 
-// Mute music
-function toggleMute() {
-  isMuted = !isMuted;
-  bgMusic.muted = isMuted;
+// Play random call
+function playRandomCall() {
+  currentAudio.pause();
+  result.innerHTML = "";
+  correctHornbill = hornbills[Math.floor(Math.random() * hornbills.length)];
+  currentAudio = new Audio(correctHornbill.sound);
+  currentAudio.play();
 }
 
-// Init
-document.getElementById("playBtn").addEventListener("click", playSound);
-document.getElementById("stopBtn").addEventListener("click", stopSound);
-document.getElementById("muteBtn").addEventListener("click", toggleMute);
-createChoices();
+function updateScoreboard() {
+  scoreDisplay.textContent = `Score: ${score}`;
+  attemptsDisplay.textContent = `Attempts: ${attempts}`;
+}
+
+// Buttons
+playBtn.addEventListener("click", playRandomCall);
+stopBtn.addEventListener("click", () => currentAudio.pause());
+muteBtn.addEventListener("click", () => {
+  bgMusic.muted = !bgMusic.muted;
+  muteBtn.textContent = bgMusic.muted ? "🔈 Unmute Music" : "🔇 Mute Music";
+});
+
+// Start game
+displayChoices();
