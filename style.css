@@ -31,6 +31,7 @@ body::before {
 
 .container {
     padding: 20px;
+    padding-top: 60px; /* To prevent collision with logo */
     max-width: 900px;
     margin: auto;
 }
@@ -121,6 +122,15 @@ button:hover {
     margin-bottom: 5px;
 }
 
+.hornbill-btn span {
+    font-size: 12px;
+    color: #2e4d1d;
+    word-wrap: break-word;
+    line-height: 1.1;
+    margin-top: 2px;
+}
+
+/* ========== MOBILE (max-width: 768px) ========== */
 @media screen and (max-width: 768px) {
     .choices {
         grid-template-columns: repeat(2, 1fr);
@@ -128,9 +138,8 @@ button:hover {
     }
 
     .hornbill-btn {
-        width: 100%;
-        max-width: 120px;
-        padding: 8px;
+        max-width: 140px;
+        padding: 10px;
     }
 
     .hornbill-btn img {
@@ -138,14 +147,12 @@ button:hover {
         border-radius: 10px;
     }
 
-.hornbill-btn span {
-    font-size: 12px;
-    color: #2e4d1d;
-    word-wrap: break-word;
-    line-height: 1.2;
-    margin-top: 2px;
-}
-        .container {
+    .hornbill-btn span {
+        font-size: 12px;
+        line-height: 1.2;
+    }
+
+    .container {
         padding-top: 60px;
     }
 
@@ -154,63 +161,60 @@ button:hover {
         top: 5px;
         left: 5px;
     }
-    
-}
-
-@media screen and (max-width: 480px) {
-    .choices {
-        grid-template-columns: repeat(1, 1fr);
-    }
-
-    .hornbill-btn {
-        max-width: 100px;
-    }
-
-    .hornbill-btn img {
-        width: 100%;
-    }
-
-    .hornbill-btn span {
-        font-size: 10px;
-    }
 
     h1 {
         font-size: 24px;
     }
 }
 
+/* ========== VERY SMALL SCREENS (max-width: 480px) ========== */
+@media screen and (max-width: 480px) {
+    .choices {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hornbill-btn {
+        max-width: 120px;
+    }
+
+    .hornbill-btn span {
+        font-size: 10px;
+    }
+}
+
+/* ========== DESKTOP (min-width: 768px) ========== */
 @media (min-width: 768px) {
-  .choices {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    justify-items: center;
-    margin: 20px auto;
-    max-width: 900px;
-  }
+    .choices {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        justify-items: center;
+        margin: 20px auto;
+        max-width: 900px;
+    }
 
-  .hornbill-btn {
-    background-color: #d2f5c0;
-    border: none;
-    padding: 14px;
-    border-radius: 18px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 200px;
-    transition: transform 0.2s ease-in-out;
-  }
+    .hornbill-btn {
+        background-color: #d2f5c0;
+        border: none;
+        padding: 14px;
+        border-radius: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 200px;
+        transition: transform 0.2s ease-in-out;
+    }
 
-  .hornbill-btn img {
-    width: 180px;
-    height: auto;
-    border-radius: 12px;
-  }
+    .hornbill-btn img {
+        width: 180px;
+        height: auto;
+        border-radius: 12px;
+    }
 
-  .hornbill-btn span {
-    font-size: 16px;
-    color: #2e4d1d;
-    text-align: center;
-    margin-top: 10px;
-  }
+    .hornbill-btn span {
+        font-size: 16px;
+        color: #2e4d1d;
+        text-align: center;
+        margin-top: 10px;
+    }
 }
