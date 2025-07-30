@@ -1,4 +1,4 @@
-﻿const hornbills = [
+const hornbills = [
     { name: "Rhinoceros Hornbill", file: "rhinoceros", image: "rhinoceros.jpg" },
     { name: "Helmeted Hornbill", file: "helmeted", image: "helmeted.jpg" },
     { name: "Wrinkled Hornbill", file: "wrinkled", image: "wrinkled.jpg" },
@@ -17,7 +17,7 @@ const resultDiv = document.getElementById("result");
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i]. array[j]] = [array[j]. array[i]];
+        [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
 }
@@ -28,10 +28,11 @@ function loadQuestion() {
     audio.src = `${correctHornbill.file}.mp3`;
     resultDiv.textContent = "";
 
+    // Create 3 random wrong choices + 1 correct
     const wrongChoices = hornbills.filter(h => h.name !== correctHornbill.name);
     shuffle(wrongChoices);
     const options = [...wrongChoices.slice(0, 3), correctHornbill];
-    shuffle(options);
+    shuffle(options); // Now mix correct + wrong options
 
     choicesDiv.innerHTML = "";
     options.forEach(hb => {
