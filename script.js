@@ -23,26 +23,21 @@ function shuffle(array) {
 }
 
 function loadQuestion() {
-    // Pick 1 correct hornbill randomly
     currentHornbill = hornbills[Math.floor(Math.random() * hornbills.length)];
     audio.src = `${currentHornbill.file}.mp3`;
     resultDiv.textContent = "";
 
-    // Get 3 wrong hornbills
     const wrongOptions = hornbills.filter(hb => hb.name !== currentHornbill.name);
-    const randomWrong = shuffle(wrongOptions).slice(0, 3);
-
-    // Combine and shuffle again for final choices
+    const randomWrong = shuffle(wrongOptions).slice(0, 7);
     const allChoices = shuffle([currentHornbill, ...randomWrong]);
 
-    // Display choices
     choicesDiv.innerHTML = "";
     allChoices.forEach(hb => {
         const btn = document.createElement("button");
         btn.className = "hornbill-btn";
         btn.innerHTML = `
-          <img src="${hb.image}" alt="${hb.name}" />
-          <span>${hb.name}</span>
+            <img src="${hb.image}" alt="${hb.name}" />
+            <span>${hb.name}</span>
         `;
         btn.onclick = () => checkAnswer(hb.name);
         choicesDiv.appendChild(btn);
