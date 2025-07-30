@@ -46,7 +46,6 @@ function loadQuestion() {
   });
 }
 
-
 function checkAnswer(selected) {
   const correctSound = document.getElementById("correct-sound");
   const wrongSound = document.getElementById("wrong-sound");
@@ -68,7 +67,6 @@ function checkAnswer(selected) {
   setTimeout(loadQuestion, 2000);
 }
 
-// Event listeners
 document.getElementById("playBtn").addEventListener("click", () => {
   audio.play();
   if (bgMusic.paused) {
