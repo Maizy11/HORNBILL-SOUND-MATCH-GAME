@@ -1,67 +1,105 @@
-const hornbills = [
-    { name: "Rhinoceros Hornbill", file: "rhinoceros", image: "rhinoceros.jpg" },
-    { name: "Helmeted Hornbill", file: "helmeted", image: "helmeted.jpg" },
-    { name: "Wrinkled Hornbill", file: "wrinkled", image: "wrinkled.jpg" },
-    { name: "White-crowned Hornbill", file: "whitecrowned", image: "whitecrowned.jpg" },
-    { name: "Oriental Pied Hornbill", file: "orientalpied", image: "orientalpied.jpg" },
-    { name: "Bushy-crested Hornbill", file: "bushycrested", image: "bushycrested.jpg" },
-    { name: "Wreathed Hornbill", file: "wreathed", image: "wreathed.jpg" },
-    { name: "Black Hornbill", file: "black", image: "black.jpg" }
+const hornbillSounds = [
+  { name: "Rhinoceros Hornbill", file: "audio/rhino.mp3", image: "images/rhino.jpg", fact: "Rhinoceros Hornbills are known for their large casque and loud calls echoing through rainforests." },
+  { name: "Helmeted Hornbill", file: "audio/helmeted.mp3", image: "images/helmeted.jpg", fact: "Helmeted Hornbills are critically endangered due to hunting for their solid casque, known as hornbill ivory." },
+  { name: "Oriental Pied Hornbill", file: "audio/oriental.mp3", image: "images/oriental.jpg", fact: "The Oriental Pied Hornbill can often be seen in urban parks and secondary forests." },
+  { name: "Black Hornbill", file: "audio/black.mp3", image: "images/black.jpg", fact: "Black Hornbills feed mostly on fruits, especially figs, and are important seed dispersers." },
+  { name: "Wreathed Hornbill", file: "audio/wreathed.mp3", image: "images/wreathed.jpg", fact: "Wreathed Hornbills are highly social and fly in flocks in search of food." },
+  { name: "Bushy-crested Hornbill", file: "audio/bushy.mp3", image: "images/bushy.jpg", fact: "Bushy-crested Hornbills are cooperative breeders and often move in family groups." },
+  { name: "White-crowned Hornbill", file: "audio/whitecrowned.mp3", image: "images/whitecrowned.jpg", fact: "White-crowned Hornbills have distinctive white crests and are shy forest dwellers." },
+  { name: "Wrinkled Hornbill", file: "audio/wrinkled.mp3", image: "images/wrinkled.jpg", fact: "Wrinkled Hornbills are named for the folds on their casque and are rarely seen due to their elusive nature." },
 ];
 
-let currentHornbill = null;
-const audio = new Audio();
-const choicesDiv = document.getElementById("choices");
+let currentAnswer = null;
+let score = 0;
+let attempts = 0;
+let currentAudio = null;
+const choicesContainer = document.getElementById("choices");
 const resultDiv = document.getElementById("result");
+const scoreDisplay = document.getElementById("score");
+const attemptsDisplay = document.getElementById("attempts");
+const bgMusic = document.getElementById("backgroundMusic");
+const correctSound = document.getElementById("correctSound");
+const wrongSound = document.getElementById("wrongSound");
+let isMuted = false;
 
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+// FUN FACT BOX
+const funFactBox = document.createElement("div");
+funFactBox.id = "funFact";
+funFactBox.style.marginTop = "20px";
+funFactBox.style.fontStyle = "italic";
+funFactBox.style.color = "#333";
+document.querySelector(".container").appendChild(funFactBox);
+
+// Create hornbill choices
+function createChoices() {
+  choicesContainer.innerHTML = "";
+  hornbillSounds.forEach((hornbill, index) => {
+    const img = document.createElement("img");
+    img.src = hornbill.image;
+    img.alt = hornbill.name;
+    img.classList.add("hornbill-img");
+    img.addEventListener("click", () => checkAnswer(index));
+    choicesContainer.appendChild(img);
+  });
 }
 
-function loadQuestion() {
-    currentHornbill = hornbills[Math.floor(Math.random() * hornbills.length)];
-    audio.src = ${currentHornbill.file}.mp3;
-    resultDiv.textContent = "";
+// Play hornbill sound
+function playSound() {
+  const randomIndex = Math.floor(Math.random() * hornbillSounds.length);
+  const selected = hornbillSounds[randomIndex];
+  currentAnswer = randomIndex;
 
-    const wrongOptions = hornbills.filter(hb => hb.name !== currentHornbill.name);
-    const randomWrong = shuffle(wrongOptions).slice(0, 7);
-    const allChoices = shuffle([currentHornbill, ...randomWrong]);
+  if (currentAudio) currentAudio.pause();
+  currentAudio = new Audio(selected.file);
+  currentAudio.play();
 
-    choicesDiv.innerHTML = "";
-    allChoices.forEach(hb => {
-        const btn = document.createElement("button");
-        btn.className = "hornbill-btn";
-        btn.innerHTML = 
-            <img src="${hb.image}" alt="${hb.name}" />
-            <span>${hb.name}</span>
-        ;
-        btn.onclick = () => checkAnswer(hb.name);
-        choicesDiv.appendChild(btn);
+  resultDiv.textContent = "";
+  funFactBox.textContent = "";
+}
+
+// Stop audio
+function stopSound() {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+  }
+}
+
+// Check user answer
+function checkAnswer(index) {
+  attempts++;
+  attemptsDisplay.textContent = `Attempts: ${attempts}`;
+
+  if (index === currentAnswer) {
+    score++;
+    scoreDisplay.textContent = `Score: ${score}`;
+    resultDiv.textContent = "✅ Correct!";
+    correctSound.play();
+
+    // Show fun fact
+    funFactBox.textContent = "🧠 Fun Fact: " + hornbillSounds[index].fact;
+
+    // Confetti
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 }
     });
+  } else {
+    resultDiv.textContent = "❌ Try Again!";
+    wrongSound.play();
+    funFactBox.textContent = "";
+  }
 }
 
-function checkAnswer(selected) {
-    if (selected === currentHornbill.name) {
-        resultDiv.textContent = "✅ Correct!";
-        resultDiv.style.color = "green";
-    } else {
-        resultDiv.textContent = ❌ Oops! It was ${currentHornbill.name}.;
-        resultDiv.style.color = "red";
-    }
-    setTimeout(loadQuestion, 2000);
+// Mute music
+function toggleMute() {
+  isMuted = !isMuted;
+  bgMusic.muted = isMuted;
 }
 
-document.getElementById("playBtn").addEventListener("click", () => {
-    audio.play();
-});
-
-document.getElementById("stopBtn").addEventListener("click", () => {
-    audio.pause();
-    audio.currentTime = 0;
-});
-
-loadQuestion();
+// Init
+document.getElementById("playBtn").addEventListener("click", playSound);
+document.getElementById("stopBtn").addEventListener("click", stopSound);
+document.getElementById("muteBtn").addEventListener("click", toggleMute);
+createChoices();
