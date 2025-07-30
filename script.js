@@ -35,10 +35,10 @@ function loadQuestion() {
     allChoices.forEach(hb => {
         const btn = document.createElement("button");
         btn.className = "hornbill-btn";
-        btn.innerHTML = `
+        btn.innerHTML = 
             <img src="${hb.image}" alt="${hb.name}" />
             <span>${hb.name}</span>
-        `;
+        ;
         btn.onclick = () => checkAnswer(hb.name);
         choicesDiv.appendChild(btn);
     });
