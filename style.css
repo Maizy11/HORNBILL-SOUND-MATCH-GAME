@@ -31,12 +31,28 @@ body::before {
 
 .container {
     padding: 20px;
-    max-width: 800px;
+    max-width: 900px;
     margin: auto;
 }
 
 h1 {
     color: #3a6b2d;
+    font-size: 28px;
+    margin-bottom: 0;
+}
+
+.subtitle {
+    margin-top: 5px;
+    font-size: 18px;
+}
+
+.instructions {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 700px;
+    font-size: 16px;
 }
 
 .buttons {
@@ -48,6 +64,8 @@ h1 {
     margin-top: 15px;
     font-weight: bold;
     color: #2a4d1d;
+    min-height: 24px;
+    transition: opacity 0.3s ease-in-out;
 }
 
 button {
@@ -59,37 +77,42 @@ button {
     border-radius: 8px;
     cursor: pointer;
     color: #1b3b1b;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
 button:hover {
     background-color: #8fcf8b;
+    transform: scale(1.05);
 }
 
 .choices {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 15px;
+    justify-items: center;
+    margin-top: 20px;
 }
 
 .hornbill-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 180px;
-    padding: 10px;
     background-color: #d4f5cb;
     border-radius: 10px;
+    padding: 8px;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 140px;
 }
 
 .hornbill-btn:hover {
-    transform: scale(1.05);
+    transform: translateY(-4px);
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.15);
 }
 
 .hornbill-btn img {
-    width: 150px;
+    width: 100%;
     height: auto;
     border-radius: 8px;
     margin-bottom: 5px;
@@ -97,7 +120,7 @@ button:hover {
 
 @media screen and (max-width: 600px) {
     .hornbill-btn {
-        width: 90%;
+        max-width: 100px;
     }
 
     .hornbill-btn img {
@@ -113,13 +136,15 @@ button:hover {
         width: 50px;
     }
 
-    #result {
-        font-size: 18px;
-        margin-bottom: 15px;
-    }
-
     .container {
         padding: 10px;
     }
-}
 
+    .instructions {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
