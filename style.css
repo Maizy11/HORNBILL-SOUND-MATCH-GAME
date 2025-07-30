@@ -30,8 +30,7 @@ body::before {
 }
 
 .container {
-    padding: 20px;
-    padding-top: 60px; /* To prevent collision with logo */
+    padding: 80px 20px 20px 20px; /* pushed down to avoid logo overlap */
     max-width: 900px;
     margin: auto;
 }
@@ -100,12 +99,12 @@ button:hover {
     flex-direction: column;
     align-items: center;
     background-color: #d4f5cb;
-    border-radius: 10px;
-    padding: 8px;
+    border-radius: 14px;
+    padding: 10px;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     width: 100%;
-    max-width: 140px;
+    max-width: 180px;
     height: auto;
     text-align: center;
 }
@@ -117,20 +116,20 @@ button:hover {
 
 .hornbill-btn img {
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 5px;
+    max-height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 8px;
 }
 
 .hornbill-btn span {
-    font-size: 12px;
+    font-size: 14px;
     color: #2e4d1d;
     word-wrap: break-word;
-    line-height: 1.1;
-    margin-top: 2px;
+    line-height: 1.2;
 }
 
-/* ========== MOBILE (max-width: 768px) ========== */
+/* ===== MOBILE: max 768px ===== */
 @media screen and (max-width: 768px) {
     .choices {
         grid-template-columns: repeat(2, 1fr);
@@ -144,35 +143,21 @@ button:hover {
 
     .hornbill-btn img {
         width: 100%;
-        border-radius: 10px;
+        height: auto;
+        border-radius: 8px;
     }
 
     .hornbill-btn span {
         font-size: 12px;
-        line-height: 1.2;
     }
 
     .container {
-        padding-top: 60px;
-    }
-
-    .logo {
-        width: 80px;
-        top: 5px;
-        left: 5px;
-    }
-
-    h1 {
-        font-size: 24px;
+        padding-top: 100px;
     }
 }
 
-/* ========== VERY SMALL SCREENS (max-width: 480px) ========== */
+/* ===== VERY SMALL: max 480px ===== */
 @media screen and (max-width: 480px) {
-    .choices {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     .hornbill-btn {
         max-width: 120px;
     }
@@ -182,27 +167,16 @@ button:hover {
     }
 }
 
-/* ========== DESKTOP (min-width: 768px) ========== */
-@media (min-width: 768px) {
+/* ===== DESKTOP: min 1024px ===== */
+@media (min-width: 1024px) {
     .choices {
-        display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        justify-items: center;
-        margin: 20px auto;
-        max-width: 900px;
+        gap: 24px;
     }
 
     .hornbill-btn {
-        background-color: #d2f5c0;
-        border: none;
+        max-width: 200px;
         padding: 14px;
-        border-radius: 18px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 200px;
-        transition: transform 0.2s ease-in-out;
     }
 
     .hornbill-btn img {
@@ -213,8 +187,7 @@ button:hover {
 
     .hornbill-btn span {
         font-size: 16px;
-        color: #2e4d1d;
-        text-align: center;
-        margin-top: 10px;
+        margin-top: 8px;
     }
 }
+
