@@ -15,23 +15,32 @@ const choicesDiv = document.getElementById("choices");
 const resultDiv = document.getElementById("result");
 
 function shuffle(array) {
-    return array.sort(() => Math.random() - 0.5);
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i]. array[j]] = [array[j]. array[i]];
+    }
+    return array;
 }
 
 function loadQuestion() {
-    const shuffled = shuffle([...hornbills]);
-    currentHornbill = shuffled[0];
-    audio.src = `${currentHornbill.file}.mp3`;
+    const correctHornbill = hornbills[Math.floor(Math.random() * hornbills.length)];
+    currentHornbill = correctHornbill;
+    audio.src = `${correctHornbill.file}.mp3`;
     resultDiv.textContent = "";
 
+    const wrongChoices = hornbills.filter(h => h.name !== correctHornbill.name);
+    shuffle(wrongChoices);
+    const options = [...wrongChoices.slice(0, 3), correctHornbill];
+    shuffle(options);
+
     choicesDiv.innerHTML = "";
-    shuffled.forEach(hb => {
+    options.forEach(hb => {
         const btn = document.createElement("button");
         btn.className = "hornbill-btn";
         btn.innerHTML = `
-      <img src="${hb.image}" alt="${hb.name}" />
-      <span>${hb.name}</span>
-    `;
+            <img src="${hb.image}" alt="${hb.name}" />
+            <span>${hb.name}</span>
+        `;
         btn.onclick = () => checkAnswer(hb.name);
         choicesDiv.appendChild(btn);
     });
