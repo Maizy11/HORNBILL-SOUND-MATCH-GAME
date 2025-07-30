@@ -2,36 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Borneo Hornbill Sound Match</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <img src="YEI-logo.png" alt="YEI Logo" class="logo" />
-  
+
   <div class="container">
-    <h1>Borneo Hornbill Sound Match</h1>
-    <p class="subtitle">🦜🌳 Listen to the call. Which hornbill is it?</p>
+<div class="title-container">
+  <h1>Borneo Hornbill Sound Match</h1>
+  <p class="subtitle">🦜🌳 Listen to the call. Which hornbill is it?</p>
+</div>
 
     <div class="instructions">
       <h2>How to Play</h2>
       <p>Tap the <strong>🔊 Play Call</strong> button to hear a hornbill sound. Then, choose the correct hornbill from the 8 images below. Good luck!</p>
+      <p><strong>Note:</strong> Background music loops continuously. If you exit or switch tabs, music may continue. To stop it, tap <strong>"🔇 Mute Music"</strong> before leaving.</p>
     </div>
 
-    <div class="buttons">
+    <div class="controls">
       <button id="playBtn">🔊 Play Call</button>
       <button id="stopBtn">⏹ Stop</button>
+      <button id="musicToggle">🔇 Mute Music</button>
     </div>
 
+    <p id="progress">Score: 0 | Attempts: 0</p>
     <div id="result"></div>
-    <div class="choices" id="choices"></div>
+    <div id="choices" class="choices"></div>
   </div>
+
+  <audio id="bg-music" loop>
+    <source src="bg-music.mp3" type="audio/mpeg" />
+  </audio>
+  <audio id="correct-sound" src="correct.mp3"></audio>
+  <audio id="wrong-sound" src="wrong.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
 </html>
-
-
-    <script src="script.js"></script>
-</body>
-</html> 
