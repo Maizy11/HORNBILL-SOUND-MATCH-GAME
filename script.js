@@ -1,50 +1,50 @@
 const hornbills = [
   {
     name: "Rhinoceros Hornbill",
-    img: "images/rhinoceros.jpg",
-    sound: "audio/rhinoceros.mp3",
+    img: "rhinoceros.jpg",
+    sound: "rhinoceros.mp3",
     fact: "It's the national bird of Malaysia!"
   },
   {
     name: "Helmeted Hornbill",
-    img: "images/helmeted.jpg",
-    sound: "audio/helmeted.mp3",
+    img: "helmeted.jpg",
+    sound: "helmeted.mp3",
     fact: "Its casque is solid and used in carvings."
   },
   {
     name: "Wrinkled Hornbill",
-    img: "images/wrinkled.jpg",
-    sound: "audio/wrinkled.mp3",
+    img: "wrinkled.jpg",
+    sound: "wrinkled.mp3",
     fact: "Females nest inside sealed tree holes."
   },
   {
     name: "Bushy-crested Hornbill",
-    img: "images/bushy.jpg",
-    sound: "audio/bushy.mp3",
+    img: "bushy.jpg",
+    sound: "bushy.mp3",
     fact: "It lives in social groups!"
   },
   {
     name: "Black Hornbill",
-    img: "images/black.jpg",
-    sound: "audio/black.mp3",
+    img: "black.jpg",
+    sound: "black.mp3",
     fact: "Commonly found in lowland forests."
   },
   {
     name: "Oriental Pied Hornbill",
-    img: "images/oriental.jpg",
-    sound: "audio/oriental.mp3",
+    img: "oriental.jpg",
+    sound: "oriental.mp3",
     fact: "Adapts well to urban areas!"
   },
   {
     name: "White-crowned Hornbill",
-    img: "images/whitecrowned.jpg",
-    sound: "audio/whitecrowned.mp3",
+    img: "whitecrowned.jpg",
+    sound: "whitecrowned.mp3",
     fact: "Rare and striking in appearance."
   },
   {
     name: "Wreathed Hornbill",
-    img: "images/wreathed.jpg",
-    sound: "audio/wreathed.mp3",
+    img: "wreathed.jpg",
+    sound: "wreathed.mp3",
     fact: "Named after its neck wrinkle."
   }
 ];
@@ -65,7 +65,7 @@ const bgMusic = document.getElementById("backgroundMusic");
 const correctSound = document.getElementById("correctSound");
 const wrongSound = document.getElementById("wrongSound");
 
-// Display all images
+// Display all choices
 function displayChoices() {
   choicesContainer.innerHTML = "";
   hornbills.forEach((hornbill) => {
@@ -78,7 +78,7 @@ function displayChoices() {
   });
 }
 
-// Handle user choice
+// Handle answer selection
 function handleChoice(selectedHornbill) {
   attempts++;
   if (selectedHornbill.name === correctHornbill.name) {
@@ -91,10 +91,10 @@ function handleChoice(selectedHornbill) {
     wrongSound.play();
   }
   updateScoreboard();
-  setTimeout(playRandomCall, 2000); // next question
+  setTimeout(playRandomCall, 2000);
 }
 
-// Play random call
+// Play a random hornbill call
 function playRandomCall() {
   currentAudio.pause();
   result.innerHTML = "";
@@ -103,12 +103,13 @@ function playRandomCall() {
   currentAudio.play();
 }
 
+// Update scoreboard UI
 function updateScoreboard() {
   scoreDisplay.textContent = `Score: ${score}`;
   attemptsDisplay.textContent = `Attempts: ${attempts}`;
 }
 
-// Buttons
+// Button controls
 playBtn.addEventListener("click", playRandomCall);
 stopBtn.addEventListener("click", () => currentAudio.pause());
 muteBtn.addEventListener("click", () => {
@@ -116,5 +117,5 @@ muteBtn.addEventListener("click", () => {
   muteBtn.textContent = bgMusic.muted ? "🔈 Unmute Music" : "🔇 Mute Music";
 });
 
-// Start game
+// Start the game
 displayChoices();
