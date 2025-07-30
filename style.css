@@ -9,16 +9,16 @@ body {
     padding: 0;
 }
 
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255,255,255,0.6);
-        z-index: -1;
-    }
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;   
+    height: 100%;
+    background-color: rgba(255,255,255,0.6);
+    z-index: -1;
+}
 
 .logo {
     position: absolute;
@@ -31,6 +31,8 @@ body {
 
 .container {
     padding: 20px;
+    max-width: 800px;
+    margin: auto;
 }
 
 h1 {
@@ -59,14 +61,15 @@ button {
     color: #1b3b1b;
 }
 
-    button:hover {
-        background-color: #8fcf8b;
-    }
+button:hover {
+    background-color: #8fcf8b;
+}
 
 .choices {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 15px;
 }
 
 .hornbill-btn {
@@ -79,6 +82,7 @@ button {
     background-color: #d4f5cb;
     border-radius: 10px;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
 }
 
     .hornbill-btn img {
@@ -90,15 +94,12 @@ button {
 
 @media screen and (max-width: 600px) {
     .hornbill-btn {
-        width: 100%;
-        margin: 8px auto;
-        padding: 8px;
+        width: 90%;
     }
 
-        .hornbill-btn img {
-            width: 100%;
-            height: auto;
-        }
+    .hornbill-btn img {
+        width: 100%;
+    }
 
     button {
         width: 90%;
@@ -106,11 +107,15 @@ button {
     }
 
     .logo {
-        width: 50px;
+        width: 60px;
     }
 
     #result {
         font-size: 18px;
         margin-bottom: 15px;
+    }
+
+    .container {
+        padding: 10px;
     }
 }
