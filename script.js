@@ -24,21 +24,21 @@ function shuffle(array) {
 
 function loadQuestion() {
     currentHornbill = hornbills[Math.floor(Math.random() * hornbills.length)];
-    audio.src = ${currentHornbill.file}.mp3;
+    audio.src = `${currentHornbill.file}.mp3`;
     resultDiv.textContent = "";
 
     const wrongOptions = hornbills.filter(hb => hb.name !== currentHornbill.name);
-    const randomWrong = shuffle(wrongOptions).slice(0, 7);
-    const allChoices = shuffle([currentHornbill, ...randomWrong]);
+    const randomWrong = shuffle(wrongOptions).slice(0, 7); // pick 7 wrong answers
+    const allChoices = shuffle([currentHornbill, ...randomWrong]); // total = 8
 
     choicesDiv.innerHTML = "";
     allChoices.forEach(hb => {
         const btn = document.createElement("button");
         btn.className = "hornbill-btn";
-        btn.innerHTML = 
+        btn.innerHTML = `
             <img src="${hb.image}" alt="${hb.name}" />
             <span>${hb.name}</span>
-        ;
+        `;
         btn.onclick = () => checkAnswer(hb.name);
         choicesDiv.appendChild(btn);
     });
@@ -49,7 +49,7 @@ function checkAnswer(selected) {
         resultDiv.textContent = "✅ Correct!";
         resultDiv.style.color = "green";
     } else {
-        resultDiv.textContent = ❌ Oops! It was ${currentHornbill.name}.;
+        resultDiv.textContent = `❌ Oops! It was ${currentHornbill.name}.`;
         resultDiv.style.color = "red";
     }
     setTimeout(loadQuestion, 2000);
