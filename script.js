@@ -1,3 +1,4 @@
+let audioStopped = false;
 let score = 0;
 let attempts = 0;
 
@@ -47,15 +48,16 @@ function loadQuestion() {
 }
 
 function checkAnswer(selected) {
+  if (audioStopped) return;
+
   const correctSound = document.getElementById("correct-sound");
   const wrongSound = document.getElementById("wrong-sound");
-  
-  // STOP previous sounds first
+
   correctSound.pause();
   wrongSound.pause();
   correctSound.currentTime = 0;
   wrongSound.currentTime = 0;
-  
+
   if (selected === currentHornbill.name) {
     resultDiv.textContent = "✅ Correct!";
     resultDiv.style.color = "green";
@@ -70,39 +72,45 @@ function checkAnswer(selected) {
   attempts++;
   updateProgress();
 
-  setTimeout(loadQuestion, 2000);
+  setTimeout(() => {
+    if (!audioStopped) loadQuestion();
+  }, 2000);
 }
 
 document.getElementById("playBtn").addEventListener("click", () => {
   audio.play();
   if (bgMusic.paused) {
-    bgMusic.play();
+    audioStopped = false;
+    audio.play();
   }
 });
 
 document.getElementById("stopBtn").addEventListener("click", () => {
-  const correctSound = document.getElementById("correct-sound");
-  const wrongSound = document.getElementById("wrong-sound");
+  audioStopped = true;
 
-  // Stop hornbill call
-  audio.pause();
-  audio.currentTime = 0;
+  const sounds = [
+    audio,
+    document.getElementById("correct-sound"),
+    document.getElementById("wrong-sound"),
+    document.getElementById("bg-music")
+  ];
 
-  // Stop correct sound
-  correctSound.pause();
-  correctSound.currentTime = 0;
-
-  // Stop wrong sound
-  wrongSound.pause();
-  wrongSound.currentTime = 0;
+  sounds.forEach(sound => {
+    sound.pause();
+    sound.currentTime = 0;
+  });
 });
 
 document.getElementById("musicToggle").addEventListener("click", () => {
+  audioStopped = false; // allow audio again
+
   if (bgMusic.paused) {
+    bgMusic.currentTime = 0; // optional: restart music
     bgMusic.play();
     document.getElementById("musicToggle").textContent = "🔇 Mute Music";
   } else {
     bgMusic.pause();
+    bgMusic.currentTime = 0; // optional: reset
     document.getElementById("musicToggle").textContent = "🎵 Unmute Music";
   }
 });
@@ -110,4 +118,5 @@ document.getElementById("musicToggle").addEventListener("click", () => {
 window.addEventListener("DOMContentLoaded", () => {
   loadQuestion();
 });
+
 
