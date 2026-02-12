@@ -49,7 +49,13 @@ function loadQuestion() {
 function checkAnswer(selected) {
   const correctSound = document.getElementById("correct-sound");
   const wrongSound = document.getElementById("wrong-sound");
-
+  
+  // STOP previous sounds first
+  correctSound.pause();
+  wrongSound.pause();
+  correctSound.currentTime = 0;
+  wrongSound.currentTime = 0;
+  
   if (selected === currentHornbill.name) {
     resultDiv.textContent = "✅ Correct!";
     resultDiv.style.color = "green";
@@ -75,8 +81,20 @@ document.getElementById("playBtn").addEventListener("click", () => {
 });
 
 document.getElementById("stopBtn").addEventListener("click", () => {
+  const correctSound = document.getElementById("correct-sound");
+  const wrongSound = document.getElementById("wrong-sound");
+
+  // Stop hornbill call
   audio.pause();
   audio.currentTime = 0;
+
+  // Stop correct sound
+  correctSound.pause();
+  correctSound.currentTime = 0;
+
+  // Stop wrong sound
+  wrongSound.pause();
+  wrongSound.currentTime = 0;
 });
 
 document.getElementById("musicToggle").addEventListener("click", () => {
@@ -92,3 +110,4 @@ document.getElementById("musicToggle").addEventListener("click", () => {
 window.addEventListener("DOMContentLoaded", () => {
   loadQuestion();
 });
+
